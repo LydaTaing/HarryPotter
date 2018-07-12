@@ -1,0 +1,88 @@
+import java.io.*;
+import java.util.*;
+
+/**
+ * @author tainglyda
+ * April 17, 2018
+ * 
+ * Investigate the words in the Harry porter chapter 1
+ * using ArrayLists and collection in general.
+ * 
+ * 
+ */
+public class HPReader {
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		
+		Scanner input = new Scanner(new File("HarryPotter.txt"));		
+		ArrayList<String> HPlist = new ArrayList<>();
+		HPlist = getList (input);
+		System.out.println(HPlist);
+				
+		Set <String> HPset = new TreeSet<>();
+		HPset = getSet(HPlist);
+		System.out.println(HPset);
+		
+		Map <String, Integer> HPmap = new TreeMap<>();
+		HPmap = getMap(HPlist);
+		System.out.println(HPmap);
+		
+		String FreWord = getMax(HPmap);
+		System.out.println(FreWord);
+	}
+
+	public static String getMax(Map<String, Integer> hPmap) {
+		
+		return null;
+	}
+
+	// Build list of most frequent used in HPlist.
+	public static Map<String, Integer> getMap(ArrayList<String> hPlist) {
+		Map<String, Integer> wordMap = new TreeMap<>();
+		for(String word: hPlist) {
+			if (!(wordMap.containsKey(word))) {
+				wordMap.put(word, 1);
+			}else {
+				int temp = wordMap.get(word);
+				wordMap.put(word, temp +1);
+			}
+		}
+		return wordMap;
+	}
+
+	// set the list to unique word only.
+	public static Set<String> getSet(ArrayList<String> HPlist) {
+		Set <String> HPset = new TreeSet<>();	
+		for (String word: HPlist) {
+			HPset.add(word.toLowerCase());	
+		}
+		
+		return HPset;
+	}
+
+	// Building the list of Clean word in ArrayList class.
+	public static ArrayList<String> getList(Scanner input) {
+		ArrayList<String> HPlist = new ArrayList<>();
+		while (input.hasNext()) {
+			 String word = input.next();
+			 String Clword = cleanWord(word);			
+			 HPlist.add(Clword);
+		}		
+		return HPlist;
+	}
+
+	// CLean each word for the getList.
+	public static String cleanWord(String word) {
+		word = word.replace("!", "");
+		word= word.replace(",", "");
+		word= word.replace(".", "");
+		word= word.replace("\'", "");
+		word= word.replace("\\", "");
+		word= word.replace("\"", "");
+		word= word.replace("-", "");
+		word= word.replace(" '", "");
+		word= word.replace("?'", "");
+		return word;
+	}
+
+}
